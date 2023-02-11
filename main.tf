@@ -10,7 +10,7 @@ terraform {
       version = ">= 2.3.0"
     }
     ansiblevault = {
-      source = "MeilleursAgents/ansiblevault"
+      source  = "MeilleursAgents/ansiblevault"
       version = "= 2.2.0"
     }
   }

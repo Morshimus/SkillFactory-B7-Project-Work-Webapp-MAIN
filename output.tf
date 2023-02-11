@@ -12,7 +12,7 @@ output "hostname_vm_1" {
 
 
 output "db_user_password" {
-  value = data.ansiblevault_path.db_key.value
+  value     = data.ansiblevault_path.db_key.value
   sensitive = true
 }
 

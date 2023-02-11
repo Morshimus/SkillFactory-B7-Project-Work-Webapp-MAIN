@@ -22,7 +22,7 @@ No modules.
 
 | Name | Type |
 |------|------|
-| [yandex_compute_instance.morsh_bastion](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/compute_instance) | resource |
+| [yandex_compute_instance.morsh_server](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/resources/compute_instance) | resource |
 | [yandex_compute_image.image](https://registry.terraform.io/providers/yandex-cloud/yandex/latest/docs/data-sources/compute_image) | data source |
 
 ## Inputs
@@ -48,7 +48,7 @@ No modules.
 
 | Name | Description |
 |------|-------------|
-| <a name="output_external_ip_address_morsh_bastion"></a> [external\_ip\_address\_morsh\_bastion](#output\_external\_ip\_address\_morsh\_bastion) | n/a |
-| <a name="output_hostname_morsh_bastion"></a> [hostname\_morsh\_bastion](#output\_hostname\_morsh\_bastion) | n/a |
-| <a name="output_internal_ip_address_morsh_bastion"></a> [internal\_ip\_address\_morsh\_bastion](#output\_internal\_ip\_address\_morsh\_bastion) | n/a |
+| <a name="output_external_ip_address_morsh_server"></a> [external\_ip\_address\_morsh\_server](#output\_external\_ip\_address\_morsh\_server) | n/a |
+| <a name="output_hostname_morsh_server"></a> [hostname\_morsh\_server](#output\_hostname\_morsh\_server) | n/a |
+| <a name="output_internal_ip_address_morsh_server"></a> [internal\_ip\_address\_morsh\_server](#output\_internal\_ip\_address\_morsh\_server) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->

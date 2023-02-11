@@ -39,21 +39,21 @@ module "morsh_pg_cluster_ya_1" {
   source               = "./MDB_POSTGRESQL_CLUSTER"
   vpc_subnet_id        = yandex_vpc_subnet.morsh-subnet-a.id
   creation_zone_yandex = var.zone_yandex_a
-  network_id           =  yandex_vpc_network.morsh-network.id
+  network_id           = yandex_vpc_network.morsh-network.id
 }
 
 module "morsh_pg_cluster_user_ya_1" {
   source               = "./MDB_POSTGRESQL_DATABASE_USER"
   creation_zone_yandex = var.zone_yandex_a
-  db_user_password = data.ansiblevault_path.db_key.value
-  pg_cluster_id   = module.morsh_pg_cluster_ya_1.morsh_yc_id_pg_cluster
+  db_user_password     = data.ansiblevault_path.db_key.value
+  pg_cluster_id        = module.morsh_pg_cluster_ya_1.morsh_yc_id_pg_cluster
 }
 
 module "morsh_pg_cluster_db_ya_1" {
   source               = "./MDB_POSTGRESQL_DATABASE"
   creation_zone_yandex = var.zone_yandex_a
-  pg_owner_name = module.morsh_pg_cluster_user_ya_1.morsh_yc_pg_user_name
-  pg_cluster_id   = module.morsh_pg_cluster_ya_1.morsh_yc_id_pg_cluster
+  pg_owner_name        = module.morsh_pg_cluster_user_ya_1.morsh_yc_pg_user_name
+  pg_cluster_id        = module.morsh_pg_cluster_ya_1.morsh_yc_id_pg_cluster
 }
 
 
@@ -62,10 +62,10 @@ resource "local_file" "yc_inventory" {
   filename = "${path.module}/yandex_cloud.ini"
 
 
-#  provisioner "local-exec" {
-#    command     = "Wait-Event -Timeout 60;. ./actions.ps1;ansible-playbook -secret"
-#    interpreter = ["powershell.exe", "-NoProfile", "-c"]
-#  }
+  #  provisioner "local-exec" {
+  #    command     = "Wait-Event -Timeout 60;. ./actions.ps1;ansible-playbook -secret"
+  #    interpreter = ["powershell.exe", "-NoProfile", "-c"]
+  #  }
 
 }
 

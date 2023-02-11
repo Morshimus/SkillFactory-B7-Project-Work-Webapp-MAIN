@@ -10,7 +10,7 @@ variable "creation_zone_yandex" {
 }
 
 variable "network_id" {
-  type = string
+  type        = string
   description = "Id of created yc network"
 }
 
@@ -33,15 +33,15 @@ variable "vpc_subnet_id" {
 
 
 variable "environment" {
-  type    = string
-  default = "PRESTABLE"
+  type        = string
+  default     = "PRESTABLE"
   description = "Mark for cluster user. Possible valuse PRESTABLE/PRODUCTION"
 }
 
 
 variable "preset" {
-  type    = string
-  default = "s2.micro"
+  type        = string
+  default     = "s2.micro"
   description = <<EOF
   **In Yandex Cloud there are exist diferrent presets.**
  +-------------+--------------------------------+-------+----------+
@@ -187,15 +187,15 @@ variable "preset" {
 
 
 variable "name" {
-  type    = string
-  default = "morsh-pg-cluster"
+  type        = string
+  default     = "morsh-pg-cluster"
   description = "Name of cluster."
 }
 
 
 variable "disk_type" {
-  type    = string
-  default = "network-ssd"
+  type        = string
+  default     = "network-ssd"
   description = "Type of disk of host in pg cluster"
 }
 
@@ -207,8 +207,8 @@ variable "disk_size" {
 
 
 variable "maintenance_type" {
-  type    = string
-  default = "WEEKLY"
+  type        = string
+  default     = "WEEKLY"
   description = <<EOF
   Type of maintenance window. Can be either ANYTIME or WEEKLY. 
   A day and hour of window need to be specified with weekly window.
@@ -216,8 +216,8 @@ variable "maintenance_type" {
 }
 
 variable "maintenance_day" {
-  type    = string
-  default = "SAT"
+  type        = string
+  default     = "SAT"
   description = <<EOF
   Day of the week (in DDD format). 
   Allowed values: "MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"
@@ -226,8 +226,8 @@ variable "maintenance_day" {
 
 
 variable "maintenance_hour" {
-  type    = number
-  default = 12
+  type        = number
+  default     = 12
   description = <<EOF
   Hour of the day in UTC (in HH format). 
   Allowed value is between 1 and 24.
@@ -236,8 +236,8 @@ variable "maintenance_hour" {
 
 
 variable "pg_version" {
-  type    = number
-  default = 15
+  type        = number
+  default     = 15
   description = <<EOF
   Version of the PostgreSQL cluster. 
   (allowed versions are: 10, 10-1c, 11, 11-1c, 12, 12-1c, 13, 13-1c, 14, 14-1c,**15**)
@@ -246,16 +246,16 @@ variable "pg_version" {
 
 
 variable "postgresql_conf_max_conn" {
-  type    = number
-  default = 395
+  type        = number
+  default     = 395
   description = <<EOF
   Sets the maximum number of concurrent connections.
   EOF
 }
 
 variable "postgresql_conf_parallel_hash" {
-  type    = bool
-  default = true
+  type        = bool
+  default     = true
   description = <<EOF
   Enables or disables the query planner's use of hash-join plan types with parallel hash. 
   Has no effect if hash-join plans are not also enabled. The default is true.
@@ -263,16 +263,16 @@ variable "postgresql_conf_parallel_hash" {
 }
 
 variable "postgresql_conf_autovacuum_vacuum_scale_factor" {
-  type    = number
-  default = 0.34
+  type        = number
+  default     = 0.34
   description = <<EOF
   Number of tuple updates or deletes prior to vacuum as a fraction of reltuples.
   EOF
 }
 
 variable "postgresql_conf_default_transaction_isolation" {
-  type    = string
-  default = "TRANSACTION_ISOLATION_READ_COMMITTED"
+  type        = string
+  default     = "TRANSACTION_ISOLATION_READ_COMMITTED"
   description = <<EOF
   Sets the transaction isolation level of each new transaction.
   EOF
@@ -280,8 +280,8 @@ variable "postgresql_conf_default_transaction_isolation" {
 
 
 variable "postgresql_conf_shared_preload_libraries" {
-  type    = string
-  default = "SHARED_PRELOAD_LIBRARIES_AUTO_EXPLAIN"
+  type        = string
+  default     = "SHARED_PRELOAD_LIBRARIES_AUTO_EXPLAIN"
   description = <<EOF
   Lists shared libraries to preload into server.
   **Allowed values:** 
