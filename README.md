@@ -26,6 +26,7 @@
 | <a name="module_morsh_pg_cluster_db_ya_1"></a> [morsh\_pg\_cluster\_db\_ya\_1](#module\_morsh\_pg\_cluster\_db\_ya\_1) | ./MDB_POSTGRESQL_DATABASE | n/a |
 | <a name="module_morsh_pg_cluster_user_ya_1"></a> [morsh\_pg\_cluster\_user\_ya\_1](#module\_morsh\_pg\_cluster\_user\_ya\_1) | ./MDB_POSTGRESQL_DATABASE_USER | n/a |
 | <a name="module_morsh_pg_cluster_ya_1"></a> [morsh\_pg\_cluster\_ya\_1](#module\_morsh\_pg\_cluster\_ya\_1) | ./MDB_POSTGRESQL_CLUSTER | n/a |
+| <a name="module_morsh_sec_group_ya_1"></a> [morsh\_sec\_group\_ya\_1](#module\_morsh\_sec\_group\_ya\_1) | ./SEC_GROUP | n/a |
 
 ## Resources
 

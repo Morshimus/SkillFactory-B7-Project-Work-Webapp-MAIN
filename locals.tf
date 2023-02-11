@@ -1,5 +1,6 @@
 locals {
 
+
   ansible_template = templatefile(
     "${path.module}/templates/ansible_inventory_template.tpl",
     {
@@ -13,4 +14,6 @@ locals {
   )
 
   loc_path = "${path.module}/"
+
+  sec_group = [module.morsh_sec_group_ya_1.morsh_yc_sec_group_id]
 }

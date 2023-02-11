@@ -1,8 +1,9 @@
 resource "yandex_mdb_postgresql_cluster" "morsh_pg_cluster" {
-  name        = var.name
-  environment = var.environment
-  network_id  = var.network_id
-  labels      = local.labels
+  name               = var.name
+  environment        = var.environment
+  network_id         = var.network_id
+  labels             = local.labels
+  security_group_ids = var.sec_group
 
   config {
     postgresql_config = local.postgresql_config

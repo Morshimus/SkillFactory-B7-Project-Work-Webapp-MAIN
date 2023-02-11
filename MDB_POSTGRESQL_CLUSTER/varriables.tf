@@ -293,3 +293,8 @@ variable "postgresql_conf_shared_preload_libraries" {
   SHARED_PRELOAD_LIBRARIES_TIMESCALEDB
   EOF
 }
+
+variable "sec_group" {
+  type        = list(string)
+  description = "Security Group for Inbound/Oubound Access to PGSQL cluster"
+}

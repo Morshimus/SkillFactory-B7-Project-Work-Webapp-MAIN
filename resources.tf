@@ -23,6 +23,13 @@ resource "yandex_vpc_subnet" "morsh-subnet-a" {
 
 #}
 
+module "morsh_sec_group_ya_1" {
+  source               = "./SEC_GROUP"
+  creation_zone_yandex = var.zone_yandex_a
+  network_id           = yandex_vpc_network.morsh-network.id
+  ingress1_cidr_blocks = yandex_vpc_subnet.morsh-subnet-a.v4_cidr_blocks
+  egress1_cidr_blocks  = yandex_vpc_subnet.morsh-subnet-a.v4_cidr_blocks
+}
 
 module "morsh_instance_ya_1" {
   source               = "./INSTANCE"
@@ -40,6 +47,7 @@ module "morsh_pg_cluster_ya_1" {
   vpc_subnet_id        = yandex_vpc_subnet.morsh-subnet-a.id
   creation_zone_yandex = var.zone_yandex_a
   network_id           = yandex_vpc_network.morsh-network.id
+  sec_group            = local.sec_group
 }
 
 module "morsh_pg_cluster_user_ya_1" {
