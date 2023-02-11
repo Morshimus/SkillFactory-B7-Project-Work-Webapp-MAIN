@@ -1,0 +1,4 @@
+---
+- src: https://github.com/Morshimus/SkillFactory-B7-Project-Work-Webapp-Roles
+  name: common
+  scm: git 

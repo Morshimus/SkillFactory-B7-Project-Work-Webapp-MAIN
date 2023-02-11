@@ -188,9 +188,9 @@ function ansibleGalaxy {
 
  
  function UpdateAnsibleRoles {
- 
+    if(!(Test-path ./roles)){mkdir ./roles}
     Remove-Item -Recurse -Force  ./roles; if($?) {ansible-galaxy -action install} else {write-host -f Magenta "Roles directory is not exist, use ansible-galaxy -action install to populate"}
-    Copy-Item ./morsh_ansible_SSH  ./roles/common/ansible/files/morsh_ansible_SSH
+    
  }
 
 
