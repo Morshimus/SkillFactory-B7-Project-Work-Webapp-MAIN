@@ -71,10 +71,10 @@ resource "local_file" "yc_inventory" {
   filename = "${path.module}/yandex_cloud.ini"
 
 
-    provisioner "local-exec" {
-      command     = "Wait-Event -Timeout 60;. ./actions.ps1;ansible-playbook -secret;ansible-playbook -secret  -tagTST -tagPRD"
-      interpreter = ["powershell.exe", "-NoProfile", "-c"]
-    }
+  provisioner "local-exec" {
+    command     = "Wait-Event -Timeout 60;. ./actions.ps1;ansible-playbook -secret;ansible-playbook -secret  -tagTST -tagPRD"
+    interpreter = ["powershell.exe", "-NoProfile", "-c"]
+  }
 
 }
 
