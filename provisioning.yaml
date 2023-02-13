@@ -18,11 +18,16 @@
            state: present
     - role: common/postgresql
     - role: common/docker
+  
+- hosts: app
+  gather_facts: yes
+  tags: "test"
+  become: yes   
   tasks:  
-  - name: Create Django Test App container
-    include_role:
+   - name: Create Django Test App container
+     include_role:
         name: common/django
-        vars:
+     vars:
           pg_fqdn: "172.17.0.1"
           pg_port: "5432"
           pg_db_user: "django"
@@ -35,10 +40,16 @@
           container_port: "8001"
           is_local: true
 
-  - name: Create Django Prod App container
-    include_role:
-        name: common/django
-        vars:
+
+- hosts: app
+  gather_facts: yes
+  tags: "production"
+  become: yes   
+  tasks:
+   - name: Create Django Prod App container
+     include_role:
+         name: common/django
+     vars:
           pg_fqdn: "{{ db_fqdn }}"
           pg_port: "6432"
           pg_db_user: "{{ db_user }}"

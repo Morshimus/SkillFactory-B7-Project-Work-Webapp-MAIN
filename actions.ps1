@@ -118,18 +118,18 @@ function ansiblePlaybook {
         [Parameter(Mandatory=$False)]
         [String]$Playbook = "./provisioning.yaml",
         [Parameter(Mandatory=$False,Position=0)]
-        [string]$fileSecrets = '~/.vault_pass',
+        [string]$fileSecrets = '~/.vault_pass_B7',
         [Parameter(Mandatory=$False,Position=0)]
-        [switch]$tagInit,
+        [switch]$tagTST,
         [Parameter(Mandatory=$False,Position=0)]
-        [switch]$tagDrop,
+        [switch]$tagPRD,
         [Parameter(Mandatory=$False,Position=0)]
         [switch]$secret
     )
 
     if($secret){$params='-e';$secrets = '@secrets'}
 
-    if($tagInit){$params='--tags';$tag = "init postfix"}elseif($tagDrop){$param='--tags';$tag = "drop postfix"}
+    if($tagTST){$param='--tags';$tag = "test"}elseif($tagPRD){$param='--tags';$tag = "production"}
 
     wsl -d $distr -u $user -e ansible-playbook  -i "$invFile" --private-key $privateKey $params $secrets --vault-password-file=$fileSecrets  $Playbook  $param $tag
 } 
