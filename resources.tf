@@ -48,6 +48,7 @@ module "morsh_pg_cluster_ya_1" {
   creation_zone_yandex = var.zone_yandex_a
   network_id           = yandex_vpc_network.morsh-network.id
   sec_group            = local.sec_group
+  pg_version           = var.pg_version
 }
 
 module "morsh_pg_cluster_user_ya_1" {

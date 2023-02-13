@@ -7,8 +7,8 @@
       vars:
         admin_group: 'adm'
         server_admin_list:
-         - name: "Ansible Administration Service"
-           username: "ansible"
+         - name: "Server Administrator"
+           username: "morsh-adm"
            keys:
              active:
                - "{{  adm_usr_pub }}"
@@ -16,29 +16,38 @@
 #               - "{{  adm_usr_pub_old }}"
            shell: "/bin/bash"   
            state: present
+    - role: common/postgresql
+    - role: common/docker
+  tasks:  
+  - name: Create Django Test App container
+    include_role:
+        name: common/django
+        vars:
+          pg_fqdn: "172.17.0.1"
+          pg_port: "5432"
+          pg_db_user: "django"
+          pg_db_user_password: "{{ pg_db_user_password }}"
+          pg_db_name: "django_test"
+          django_app_root: /srv/app/tst
+          django_app_static: /srv/app/tst/static/polls
+          django_app_templates: /srv/app/tst/templates/polls
+          container_name : "sf_web_tst"
+          container_port: "8001"
+          is_local: true
 
-
-- hosts: web
-  become: yes
-  roles:
-    - role: common/users_mgmt
-      vars:
-        admin_group: 'adm'
-        server_admin_list:
-         - name: "Ansible Administration Service"
-           username: "ansible"
-           keys:
-             active:
-               - "{{  adm_usr_pub }}"
-#             disabled:
-#               - "{{  adm_usr_pub_old }}"
-           shell: "/bin/bash"   
-           state: present
-    - role: common/ansible
-      vars:
-        path_to_inventory: "/home/ansible/inventory.ini"
-        path_to_roles: "/home/ansible/roles"
-        path_to_requirements: "/home/ansible/requirements.yml"
-        path_to_playbook: "/home/ansible/provisioning.yaml"
-        path_to_key: "/home/ansible/{{ src_private_key }}"  
+  - name: Create Django Prod App container
+    include_role:
+        name: common/django
+        vars:
+          pg_fqdn: "{{ db_fqdn }}"
+          pg_port: "6432"
+          pg_db_user: "{{ db_user }}"
+          pg_db_user_password: "{{ pg_db_user_password }}"
+          pg_db_name: "{{ db_name }}"
+          django_app_root: /srv/app/prd
+          django_app_static: /srv/app/prd/static/polls
+          django_app_templates: /srv/app/prd/templates/polls
+          container_name : "sf_web_prd"
+          container_port: "8000"
+          is_local: false
        
