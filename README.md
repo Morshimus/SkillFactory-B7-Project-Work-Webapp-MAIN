@@ -19,7 +19,21 @@
    - ~~*Образ должен быть оптимизирован с учетом лучших практик.*~~
    
 # Start
-  
+ 
+ > Для того чтобы разобраться в нашем проекте понадобиться некая схема, как мы свяжем 3 разных репозитория в единую конструкцию.
+ > При планировании было решено развернуть 2 среды приложения - тестовая и продакшн, где тестовая это локально настроеный экземпляр PostgreSQL а продакшн это Yandex Cloud mdb Postgresql Cluster. Контейнеры приложения будут разворачиваться на одной вм. Volumes буду файлы django - static, template, + django.conf.
+```mermaid
+sequenceDiagram
+    MAIN->>+ROLES: Initiate terraform to launch playbook
+    ROLES->>+MAIN: Roles installing Docker,Postgresql, and django inaisw docker containers
+    MAIN-->>+APP: Provide VM and YC mdb Postgresql
+    APP-->>+ROLES: Configure APP deployment 
+```
+$${\color{pink}Here \space We \space Go \space Again }$$
+
+
+![image](https://github.com/Morshimus/SkillFactory-B7-Project-Work-Webapp-MAIN/blob/main/img/start.gif)
+ 
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
