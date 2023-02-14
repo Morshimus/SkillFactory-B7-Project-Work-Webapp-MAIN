@@ -34,6 +34,150 @@ $${\color{pink}Here \space We \space Go \space Again }$$
 
 ![image](https://github.com/Morshimus/SkillFactory-B7-Project-Work-Webapp-MAIN/blob/main/img/start.gif)
  
+# Напишем наш джанго view -  будет показывать какой экземпляр бд запущен на веб страницу. Данные берутся из перемнной подключения БД.
+
+$${\color{magenta}views.py|APP}$$
+
+```
+from django.http import HttpResponse
+from django.template import loader
+from configparser import ConfigParser
+from configparser import NoSectionError as configparse_err
+
+def get_db_config(db_option):
+ config = ConfigParser()
+
+ config.read('/app/django.conf')
+ try:
+     result = config.get("database", db_option)
+ except configparse_err:
+    print ('Cannot get {}. There is no such section or config file is unavailable/does not exist').format(db_option)
+    exit ()
+ return result
+
+def index(request):
+    template = loader.get_template('polls/index.html')
+    db_name = "database {0}".format(get_db_config("db_name"))
+    context = {
+        'db_name': db_name,
+    }
+    return HttpResponse(template.render(context, request))
+```
+ 
+# Template html помещен в роли, так как представляет собой однотипный шаблон.
+
+$${\color{magenta}index.html|Roles|django|files}$$
+
+```
+{% load static %}
+<link rel="stylesheet" href="{% static 'polls/style.css' %}">
+<link rel="shortcut icon" type="image/png" href="{% static 'polls/favicon.ico' %}"/>
+<h1>You are at {{ db_name }}</h1>
+
+```
+
+# Собираем нащ Dockerfile, и можем приступать. *(Все роли были проверены на молекуле,да да, даже сервисы)*
+
+$${\color{magenta}Dockerfile|APP}$$
+
+```
+FROM  python:3.9.2-alpine AS builder
+ENV PYTHONUNBUFFERED 1
+EXPOSE 8000
+WORKDIR /app 
+COPY requirements.txt /app
+RUN apk -U upgrade && \
+    apk --no-cache add gcc  \
+    musl-dev \
+    postgresql-dev \
+    python3-dev && \
+    pip3 install --upgrade pip &&\ 
+    pip3 install -r requirements.txt --no-cache-dir
+ADD SkillFactory/. /app
+ENTRYPOINT ["python3"] 
+CMD ["manage.py", "runserver", "0.0.0.0:8000"]
+```
+
+> Далее отправляем наш докер образ на докер хаб, пометив версию, и добавив тег latest. В данной конфигурации берем latest на удаленной ВМ
+
+
+$${\color{magenta}dockerbuild.ps1|APP}$$
+
+```
+docker build -t morsh92/skillfactory-web-pg:$args -t morsh92/skillfactory-web-pg:latest .;
+if($?){
+docker push morsh92/skillfactory-web-pg:$args;
+docker push morsh92/skillfactory-web-pg:latest;     
+}
+```
+
+> И настоет время поднять этого гиганта. В данной версии также внедрены теги  для энсибль под прод и тест, которыми в дальнейшем можно удобно жонглировать
+
+$${\color{magenta}provisioning.yml|MAIN}$$
+
+```
+- hosts: app
+  gather_facts: yes
+  tags: "test"
+  become: yes   
+  tasks:  
+   - name: Create Django Test App container
+     include_role:
+        name: common/django
+     vars:
+          pg_fqdn: "172.17.0.1"
+          pg_port: "5432"
+          pg_db_user: "django"
+          pg_db_user_password: "{{ pg_db_user_password }}"
+          pg_db_name: "django_test"
+          django_app_root: /srv/app/tst
+          django_app_static: /srv/app/tst/static/polls
+          django_app_templates: /srv/app/tst/templates/polls
+          container_name : "sf_web_tst"
+          container_port: "8001"
+          is_local: true
+
+
+- hosts: app
+  gather_facts: yes
+  tags: "production"
+  become: yes   
+  tasks:
+   - name: Create Django Prod App container
+     include_role:
+         name: common/django
+     vars:
+          pg_fqdn: "{{ db_fqdn }}"
+          pg_port: "6432"
+          pg_db_user: "{{ db_user }}"
+          pg_db_user_password: "{{ pg_db_user_password }}"
+          pg_db_name: "{{ db_name }}"
+          django_app_root: /srv/app/prd
+          django_app_static: /srv/app/prd/static/polls
+          django_app_templates: /srv/app/prd/templates/polls
+          container_name : "sf_web_prd"
+          container_port: "8000"
+          is_local: false
+```
+
+> Пользуемся динамической инвентори.
+
+$${\color{yellow}templates|ansibleinventorytemplate.tpl:}$$
+
+```
+[app]
+${hostname} ansible_host=${ip} ansible_user=${user}
+[app:vars]
+db_name=${db_name}
+db_user=${db_user}
+db_fqdn=${db_fqdn}
+pg_version=${pg_version}
+pg_data_root=${pg_data_root}
+```
+ 
+# Поехали!
+
+
 <!-- BEGINNING OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
 ## Requirements
 
