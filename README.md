@@ -25,7 +25,7 @@
 ```mermaid
 sequenceDiagram
     MAIN->>+ROLES: Initiate terraform to launch playbook
-    ROLES->>+MAIN: Roles installing Docker,Postgresql, and django inaisw docker containers
+    ROLES->>+MAIN: Roles installing Docker,Postgresql, and django inside docker containers
     MAIN-->>+APP: Provide VM and YC mdb Postgresql
     APP-->>+ROLES: Configure APP deployment 
 ```
