@@ -26,7 +26,7 @@
 sequenceDiagram
     MAIN->>+ROLES: Initiate terraform to launch playbook
     ROLES->>+MAIN: Roles installing Docker,Postgresql, and django inside docker containers
-    APP-->>+ROLES: Roles pull docker image by executing docker plubin in ansible
+    APP-->>+ROLES: Roles pull docker image by executing docker plugin in ansible
     MAIN-->>+ROLES: Provide VM and YC mdb Postgresql
     APP-->>+ROLES: Configure APP deployment 
 ```
